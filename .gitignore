@@ -1,0 +1,26 @@
+# Frontend
+frontend/node_modules/
+frontend/.vscode/
+frontend/.DS_Store
+
+# Backend
+backend/target/
+backend/.idea/
+backend/*.iml
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/HELP.md
+backend/.gitattributes
+backend/.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
