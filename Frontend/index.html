@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager - Full Stack</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+    <!-- Auth Container (shown when not logged in) -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-box">
+            <h2>📋 Task Manager</h2>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="showLogin()">Login</button>
+                <button class="auth-tab" onclick="showRegister()">Register</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form active">
+                <input type="text" id="login-username" placeholder="Username">
+                <input type="password" id="login-password" placeholder="Password">
+                <button onclick="handleLogin()">Login</button>
+                <p id="login-error" class="error-message"></p>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form">
+                <input type="text" id="register-username" placeholder="Username">
+                <input type="password" id="register-password" placeholder="Password">
+                <input type="password" id="register-confirm" placeholder="Confirm Password">
+                <button onclick="handleRegister()">Register</button>
+                <p id="register-error" class="error-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container (shown when logged in) -->
+    <div id="app-container" class="container" style="display: none;">
+        <!-- Logout Button -->
+        <div class="logout-container">
+            <span id="welcome-user"></span>
+           <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+        </div>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard">
+            <h2>📊 Dashboard</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>📋 Total Tasks</h3>
+                    <p id="total-tasks">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>✅ Completed</h3>
+                    <p id="completed-tasks">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>⚠️ Overdue</h3>
+                    <p id="overdue-tasks">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>📈 Completion Rate</h3>
+                    <p id="completion-rate">0%</p>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <canvas id="taskChart" style="max-height: 300px; margin: 20px 0;"></canvas>
+            <canvas id="priorityChart" style="max-height: 300px; margin: 20px 0;"></canvas>
+            <canvas id="moduleChart" style="max-height: 300px; margin: 20px 0;"></canvas>
+        </section>
+
+        <!-- Add Module Section -->
+        <section id="module-section">
+            <h2>📁 Add Module</h2>
+            <form id="moduleForm">
+                <input type="text" id="moduleName" placeholder="Module Name (e.g., Mathematics)" required>
+                <button type="submit">➕ Add Module</button>
+            </form>
+            <div id="moduleList"></div>
+        </section>
+
+        <!-- Add Task Section -->
+        <section id="task-section">
+            <h2>✅ Add Task</h2>
+            <form id="taskForm">
+                <select id="taskModule" required>
+                    <option value="">Select a Module</option>
+                </select>
+                <input type="text" id="taskName" placeholder="Task name" required>
+                <input type="date" id="taskDueDate" required>
+                <select id="taskPriority" required>
+                    <option value="LOW">🟢 Low Priority</option>
+                    <option value="MEDIUM">🟡 Medium Priority</option>
+                    <option value="HIGH">🔴 High Priority</option>
+                </select>
+                <button type="submit">➕ Add Task</button>
+            </form>
+
+            <!-- Quick Templates -->
+            <div class="quick-templates">
+                <h3>📋 Quick Templates</h3>
+                <button onclick="addQuickTask('HIGH')" class="quick-high">🔴 Urgent Task</button>
+                <button onclick="addQuickTask('MEDIUM')" class="quick-medium">🟡 Normal Task</button>
+                <button onclick="addQuickTask('LOW')" class="quick-low">🟢 Quick Task</button>
+            </div>
+        </section>
+
+        <!-- Task List Section -->
+        <section id="task-list-section">
+            <h2>📋 Tasks</h2>
+            
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search tasks...">
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters">
+                <select id="priorityFilter">
+                    <option value="All">All Priorities</option>
+                    <option value="HIGH">🔴 High</option>
+                    <option value="MEDIUM">🟡 Medium</option>
+                    <option value="LOW">🟢 Low</option>
+                </select>
+                
+                <select id="moduleFilter">
+                    <option value="All">All Modules</option>
+                </select>
+                
+                <button onclick="sortByDate()">📅 Sort by Date</button>
+            </div>
+            
+            <!-- Task List -->
+            <div id="taskList"></div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="api.js"></script>
+    <script src="modules.js"></script>
+    <script src="tasks.js"></script>
+    <script src="analytics.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
